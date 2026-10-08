@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOM BIJAK BAHASA! 🎮📚 - Permainan BM Tahun 1 (50 Soalan)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandYellow: '#FFD166',
+                        brandBlue: '#118AB2',
+                        brandGreen: '#06D6A0',
+                        brandRed: '#EF476F',
+                        brandPurple: '#073B4C',
+                        brandOrange: '#FF9F1C',
+                        softBg: '#F4F7FE'
+                    },
+                    fontFamily: {
+                        fredoka: ['Fredoka', 'sans-serif'],
+                        nunito: ['Nunito', 'sans-serif']
+                    },
+                    animation: {
+                        bounceSlow: 'bounce 2s infinite',
+                        wiggle: 'wiggle 0.5s ease-in-out infinite',
+                        pulseFast: 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        float: 'float 3s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #eef2f7;
+            background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .heading-font {
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .btn-game {
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+        .btn-game:active {
+            transform: translateY(4px) !important;
+            box-shadow: 0px 0px 0px transparent !important;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border: 3px solid #E2E8F0;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F1F5F9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-800 flex flex-col justify-between p-2 sm:p-4 md:p-6 overflow-x-hidden">
+
+    <!-- TOP BAR -->
+    <header class="max-w-4xl mx-auto w-full flex items-center justify-between bg-white rounded-2xl p-3 sm:p-4 shadow-md border-2 border-slate-200 mb-3">
+        <div class="flex items-center space-x-2 cursor-pointer" onclick="goHome()">
+            <div class="bg-amber-400 p-2 rounded-xl text-2xl shadow">🎮</div>
+            <div>
+                <h1 class="heading-font text-xl sm:text-2xl font-bold text-brandBlue tracking-wide leading-tight">JOM BIJAK BAHASA!</h1>
+                <p class="text-xs text-slate-500 font-bold hidden sm:block">Bahasa Melayu Tahun 1 • 50 Soalan 📚</p>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-2">
+            <!-- Share Button -->
+            <button onclick="shareGameLink()" class="bg-emerald-100 hover:bg-emerald-200 text-emerald-800 font-bold px-3 py-2 rounded-xl text-xs sm:text-sm flex items-center space-x-1 border-2 border-emerald-300 transition" title="Kongsi Pautan">
+                <span>🔗</span>
+                <span class="hidden sm:inline">Kongsi</span>
+            </button>
+
+            <!-- Leaderboard Button -->
+            <button onclick="toggleLeaderboardModal()" class="bg-amber-100 hover:bg-amber-200 text-amber-800 font-bold px-3 py-2 rounded-xl text-xs sm:text-sm flex items-center space-x-1 border-2 border-amber-300 transition">
+                <span>🏆</span>
+                <span class="hidden sm:inline">Papan Pendahulu</span>
+            </button>
+
+            <!-- Teacher Mode Button -->
+            <button onclick="toggleTeacherModal()" class="bg-purple-100 hover:bg-purple-200 text-purple-700 font-bold px-3 py-2 rounded-xl text-xs sm:text-sm flex items-center space-x-1 border-2 border-purple-300 transition">
+                <span>🧑‍🏫</span>
+                <span class="hidden sm:inline">Mod Guru</span>
+            </button>
+            
+            <!-- Sound Toggle Button -->
+            <button id="soundToggleBtn" onclick="toggleSound()" class="bg-amber-100 hover:bg-amber-200 text-amber-800 font-bold p-2 rounded-xl text-lg sm:text-xl border-2 border-amber-300 transition" title="Bunyi">
+                🔊
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto w-full flex-grow flex flex-col justify-center">
+
+        <!-- ================= SCREEN 1: WELCOME / START SCREEN ================= -->
+        <section id="welcomeScreen" class="glass-panel rounded-3xl p-6 sm:p-8 text-center shadow-xl border-4 border-amber-300 relative overflow-hidden my-auto">
+            <!-- Decorative Elements -->
+            <div class="absolute -top-10 -left-10 text-6xl opacity-20">✏️</div>
+            <div class="absolute -bottom-10 -right-10 text-6xl opacity-20">🎒</div>
+            
+            <!-- Bimo Robot Greeting -->
+            <div class="flex flex-col items-center justify-center mb-6">
+                <div class="relative animate-float">
+                    <!-- SVG Robot Avatar Bimo -->
+                    <svg class="w-28 h-28 sm:w-36 sm:h-36 drop-shadow-md" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="50" y="60" width="100" height="90" rx="20" fill="#3B82F6" stroke="#1D4ED8" stroke-width="6"/>
+                        <rect x="65" y="80" width="70" height="45" rx="10" fill="#EFF6FF"/>
+                        <circle cx="85" cy="100" r="8" fill="#1E3A8A"/>
+                        <circle cx="115" cy="100" r="8" fill="#1E3A8A"/>
+                        <circle cx="87" cy="98" r="3" fill="#FFFFFF"/>
+                        <circle cx="117" cy="98" r="3" fill="#FFFFFF"/>
+                        <path d="M 85 115 Q 100 125 115 115" stroke="#1E3A8A" stroke-width="4" stroke-linecap="round"/>
+                        <rect x="92" y="25" width="16" height="35" fill="#60A5FA"/>
+                        <circle cx="100" cy="20" r="12" fill="#F59E0B" class="animate-pulse"/>
+                        <rect x="25" y="85" width="25" height="40" rx="10" fill="#2563EB"/>
+                        <rect x="150" y="85" width="25" height="40" rx="10" fill="#2563EB"/>
+                        <rect x="70" y="150" width="20" height="30" rx="8" fill="#1D4ED8"/>
+                        <rect x="110" y="150" width="20" height="30" rx="8" fill="#1D4ED8"/>
+                        <polygon points="100,55 90,65 110,65" fill="#F59E0B"/>
+                    </svg>
+                    <span class="absolute -top-2 -right-2 bg-yellow-400 text-amber-900 text-xs font-black px-3 py-1 rounded-full shadow-lg border border-yellow-500 animate-bounce">
+                        Hai! Saya BIMO! 🤖
+                    </span>
+                </div>
+
+                <div class="bg-blue-50 border-2 border-blue-200 rounded-2xl p-4 mt-4 max-w-lg shadow-inner text-blue-900 font-bold text-sm sm:text-base leading-relaxed">
+                    “Mari kita jawab <strong>50 soalan Bahasa Melayu Tahun 1</strong> untuk menjadi Murid Super Bijak Bahasa! Sedia?”
+                </div>
+            </div>
+
+            <!-- Single Info Box -->
+            <div class="bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 mb-6 max-w-md mx-auto text-center">
+                <div class="flex items-center justify-center space-x-4 text-xs sm:text-sm font-black text-amber-900">
+                    <span class="flex items-center space-x-1"><span>📝</span><span>50 Soalan</span></span>
+                    <span>•</span>
+                    <span class="flex items-center space-x-1"><span>⏱️</span><span>40s / Soalan</span></span>
+                    <span>•</span>
+                    <span class="flex items-center space-x-1"><span>❤️</span><span>3 Nyawa</span></span>
+                </div>
+            </div>
+
+            <!-- Start Game Button -->
+            <button onclick="startGame()" class="btn-game w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white heading-font text-2xl font-bold px-10 py-4 rounded-2xl shadow-[0_6px_0_#047857] border-2 border-emerald-300 transform hover:-translate-y-1 transition duration-150 flex items-center justify-center space-x-3 mx-auto">
+                <span>🎮</span>
+                <span>MULA PERMAINAN (50 SOALAN)</span>
+            </button>
+        </section>
+
+        <!-- ================= SCREEN 2: GAMEPLAY SCREEN ================= -->
+        <section id="gameScreen" class="hidden flex-col space-y-4">
+
+            <!-- STATS HEADER BAR -->
+            <div class="glass-panel rounded-2xl p-3 sm:p-4 shadow-md flex flex-wrap items-center justify-between gap-2 border-2 border-blue-200">
+                <!-- Level Indicator -->
+                <div id="levelBadge" class="bg-blue-100 text-blue-800 border-2 border-blue-300 font-black px-3 py-1 rounded-xl text-xs sm:text-sm flex items-center space-x-1">
+                    <span>🌱</span>
+                    <span id="levelText">TAHAP 1: ASAS</span>
+                </div>
+
+                <!-- Lives Counter -->
+                <div class="flex items-center space-x-1 bg-rose-50 border-2 border-rose-200 px-3 py-1 rounded-xl">
+                    <span class="text-xs font-black text-rose-700 mr-1">NYAWA:</span>
+                    <div id="livesContainer" class="flex space-x-1 text-lg sm:text-xl">
+                        <span>❤️</span><span>❤️</span><span>❤️</span>
+                    </div>
+                </div>
+
+                <!-- Timer -->
+                <div class="flex items-center space-x-2 bg-amber-50 border-2 border-amber-300 px-3 py-1 rounded-xl">
+                    <span class="text-xl">⏱️</span>
+                    <span id="timerText" class="heading-font text-xl sm:text-2xl font-black text-amber-700">40</span>
+                </div>
+
+                <!-- Score Board -->
+                <div class="flex items-center space-x-1 bg-emerald-100 border-2 border-emerald-300 px-3 py-1 rounded-xl">
+                    <span class="text-xs font-black text-emerald-800">MARKAH:</span>
+                    <span id="scoreText" class="heading-font text-xl sm:text-2xl font-black text-emerald-700">0</span>
+                </div>
+            </div>
+
+            <!-- PROGRESS BAR -->
+            <div class="w-full bg-slate-200 h-4 rounded-full overflow-hidden p-0.5 border border-slate-300 shadow-inner">
+                <div id="progressBar" class="bg-gradient-to-r from-blue-400 to-emerald-400 h-full rounded-full transition-all duration-300 w-0"></div>
+            </div>
+
+            <!-- QUESTION CARD -->
+            <div class="glass-panel rounded-3xl p-5 sm:p-7 shadow-lg border-4 border-blue-300 relative">
+                
+                <!-- Question Number Banner -->
+                <div class="flex justify-between items-center mb-4">
+                    <span id="questionNumText" class="bg-indigo-600 text-white font-black text-xs sm:text-sm px-4 py-1.5 rounded-full uppercase tracking-wider shadow">
+                        Soalan 1 / 50
+                    </span>
+                    <span id="topicTag" class="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-full border">
+                        Huruf Vokal
+                    </span>
+                </div>
+
+                <!-- Question Prompt -->
+                <h2 id="questionPrompt" class="heading-font text-lg sm:text-2xl font-bold text-slate-800 leading-snug mb-4">
+                    Pilih jawapan yang betul.
+                </h2>
+
+                <!-- Visual Element Container -->
+                <div id="visualContainer" class="hidden mb-5 bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-dashed border-amber-300 rounded-2xl p-4 flex flex-col items-center justify-center max-w-xs mx-auto shadow-inner">
+                    <!-- Inserted via JavaScript -->
+                </div>
+
+                <!-- OPTIONS GRID (4 CHOICES) -->
+                <div id="optionsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mt-4">
+                    <!-- Option Buttons dynamically generated -->
+                </div>
+            </div>
+
+            <!-- BIMO INTERACTIVE FEEDBACK BOX -->
+            <div class="bg-white rounded-2xl p-4 border-2 border-blue-200 shadow flex items-center space-x-3 sm:space-x-4">
+                <div class="flex-shrink-0">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-blue-500 rounded-2xl flex items-center justify-center text-2xl shadow border-2 border-blue-600">
+                        🤖
+                    </div>
+                </div>
+                <div class="flex-grow">
+                    <p id="bimoSpeech" class="font-bold text-slate-700 text-sm sm:text-base leading-tight">
+                        "Fikir secara perlahan-lahan ya! Bimo yakin kamu boleh buat!"
+                    </p>
+                </div>
+            </div>
+
+            <!-- NEXT / CONTINUE BUTTON -->
+            <div id="nextBtnContainer" class="hidden justify-end">
+                <button id="nextBtn" onclick="nextQuestion()" class="btn-game bg-blue-500 hover:bg-blue-600 text-white heading-font text-lg sm:text-xl font-bold px-8 py-3.5 rounded-2xl shadow-[0_5px_0_#1D4ED8] border-2 border-blue-300 flex items-center space-x-2">
+                    <span>Soalan Seterusnya</span>
+                    <span>➡️</span>
+                </button>
+            </div>
+
+        </section>
+
+        <!-- ================= SCREEN 4: GAME OVER / OUT OF LIVES ================= -->
+        <section id="gameOverScreen" class="hidden glass-panel rounded-3xl p-6 sm:p-8 text-center shadow-2xl border-4 border-rose-300 my-auto">
+            <div class="text-6xl mb-2 animate-bounce">💔</div>
+            <h2 class="heading-font text-3xl sm:text-4xl font-black text-rose-600 mb-2">NYAWA HABIS!</h2>
+            <p class="text-slate-600 font-bold text-base mb-6">Jangan risau, belajar daripada kesilapan ialah kunci kejayaan!</p>
+
+            <div class="bg-rose-50 border-2 border-rose-200 rounded-2xl p-4 max-w-sm mx-auto mb-6">
+                <span class="text-xs font-bold text-rose-500 uppercase">Markah Dikumpul</span>
+                <p id="gameOverScore" class="heading-font text-4xl font-black text-rose-700">0</p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-3">
+                <button onclick="startGame()" class="btn-game bg-emerald-500 hover:bg-emerald-600 text-white heading-font text-xl font-bold px-8 py-3.5 rounded-2xl shadow-[0_5px_0_#047857] border-2 border-emerald-300">
+                    🔄 Cuba Lagi
+                </button>
+                <button onclick="goHome()" class="btn-game bg-slate-200 hover:bg-slate-300 text-slate-700 heading-font text-xl font-bold px-8 py-3.5 rounded-2xl border-2 border-slate-300">
+                    🏠 Halaman Utama
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= SCREEN 4: FINAL RESULTS / REWARDS ================= -->
+        <section id="resultsScreen" class="hidden glass-panel rounded-3xl p-6 sm:p-8 text-center shadow-2xl border-4 border-amber-300 my-auto">
+            
+            <div class="text-6xl mb-2 animate-bounce">🎉</div>
+            <h2 class="heading-font text-3xl sm:text-4xl font-black text-amber-600 mb-1">TAHNIAH! TAMAT!</h2>
+            <p class="text-slate-600 font-bold text-sm sm:text-base mb-6">Syabas! Kamu telah melengkapkan kesemua 50 soalan Bahasa Melayu!</p>
+
+            <!-- TIER RANK BADGE DISPLAY -->
+            <div class="mb-6">
+                <div id="tierBadgeBox" class="inline-block bg-gradient-to-r from-amber-400 to-yellow-500 text-amber-950 heading-font text-2xl sm:text-3xl font-black px-8 py-3 rounded-2xl shadow-lg border-2 border-yellow-200">
+                    🏆 SUPER BIJAK BAHASA!
+                </div>
+            </div>
+
+            <!-- SCORE STATS GRID -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6 max-w-2xl mx-auto">
+                <div class="bg-blue-50 border-2 border-blue-200 p-3 rounded-2xl">
+                    <span class="text-xs font-bold text-blue-600 block">⭐ MARKAH</span>
+                    <span id="resScore" class="heading-font text-2xl sm:text-3xl font-black text-blue-800">500</span>
+                </div>
+                <div class="bg-emerald-50 border-2 border-emerald-200 p-3 rounded-2xl">
+                    <span class="text-xs font-bold text-emerald-600 block">✅ BETUL</span>
+                    <span id="resCorrect" class="heading-font text-2xl sm:text-3xl font-black text-emerald-800">50 / 50</span>
+                </div>
+                <div class="bg-rose-50 border-2 border-rose-200 p-3 rounded-2xl">
+                    <span class="text-xs font-bold text-rose-600 block">❌ SALAH</span>
+                    <span id="resWrong" class="heading-font text-2xl sm:text-3xl font-black text-rose-800">0</span>
+                </div>
+                <div class="bg-purple-50 border-2 border-purple-200 p-3 rounded-2xl">
+                    <span class="text-xs font-bold text-purple-600 block">❤️ NYAWA BAKI</span>
+                    <span id="resLives" class="heading-font text-2xl sm:text-3xl font-black text-purple-800">3</span>
+                </div>
+            </div>
+
+            <!-- EARNED BADGES SECTION -->
+            <div class="bg-amber-50/80 border-2 border-amber-200 rounded-2xl p-4 mb-6">
+                <h3 class="heading-font text-lg font-bold text-amber-900 mb-3">🎁 LENCANA ANUGERAH KAMU</h3>
+                <div id="badgesContainer" class="flex flex-wrap justify-center gap-2 mb-4">
+                    <!-- Dynamic badges inserted here -->
+                </div>
+
+                <!-- SAVE HIGH SCORE FORM -->
+                <div class="border-t-2 border-amber-200 pt-4 flex flex-col sm:flex-row items-center justify-center gap-2">
+                    <input type="text" id="playerNameInput" placeholder="Masukkan Nama Kamu..." maxlength="15" class="px-4 py-2 rounded-xl border-2 border-amber-300 font-bold text-slate-800 text-sm w-full sm:w-64 focus:outline-none focus:border-amber-500">
+                    <button onclick="saveCurrentScore()" id="saveScoreBtn" class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-5 py-2 rounded-xl text-sm border-2 border-amber-300 shadow w-full sm:w-auto">
+                        💾 Simpan Rekod Skor
+                    </button>
+                </div>
+            </div>
+
+            <!-- ACTION BUTTONS -->
+            <div class="flex flex-col sm:flex-row justify-center gap-3">
+                <button onclick="startGame()" class="btn-game bg-emerald-500 hover:bg-emerald-600 text-white heading-font text-xl font-bold px-8 py-3.5 rounded-2xl shadow-[0_5px_0_#047857] border-2 border-emerald-300">
+                    🔄 Main Semula
+                </button>
+                <button onclick="toggleLeaderboardModal()" class="btn-game bg-amber-500 hover:bg-amber-600 text-white heading-font text-xl font-bold px-8 py-3.5 rounded-2xl shadow-[0_5px_0_#B45309] border-2 border-amber-300">
+                    🏆 Papan Pendahulu
+                </button>
+                <button onclick="toggleTeacherModal()" class="btn-game bg-purple-600 hover:bg-purple-700 text-white heading-font text-xl font-bold px-8 py-3.5 rounded-2xl shadow-[0_5px_0_#581C87] border-2 border-purple-300">
+                    🧑‍🏫 Mod Guru
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= LEADERBOARD MODAL ================= -->
+    <div id="leaderboardModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="glass-panel rounded-3xl max-w-md w-full p-6 shadow-2xl border-4 border-amber-300 max-h-[90vh] flex flex-col justify-between">
+            <div>
+                <div class="flex justify-between items-center mb-4 border-b-2 border-slate-200 pb-3">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-3xl">🏆</span>
+                        <h2 class="heading-font text-2xl font-bold text-amber-900">PAPAN PENDAHULU</h2>
+                    </div>
+                    <button onclick="toggleLeaderboardModal()" class="text-slate-400 hover:text-slate-600 font-bold text-2xl">&times;</button>
+                </div>
+
+                <!-- LEADERBOARD LIST -->
+                <div id="leaderboardList" class="space-y-2 max-h-[50vh] overflow-y-auto pr-1">
+                    <!-- Dynamic leaderboard rows injected here -->
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center border-t-2 border-slate-200 pt-4 mt-4">
+                <button onclick="clearLeaderboard()" class="text-xs text-rose-600 font-bold hover:underline">
+                    🗑️ Padam Rekod
+                </button>
+                <button onclick="toggleLeaderboardModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-5 py-2 rounded-xl text-sm">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= TEACHER MODE MODAL ================= -->
+    <div id="teacherModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="glass-panel rounded-3xl max-w-2xl w-full p-6 shadow-2xl border-4 border-purple-300 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4 border-b-2 border-slate-200 pb-3">
+                <div class="flex items-center space-x-2">
+                    <span class="text-3xl">🧑‍🏫</span>
+                    <h2 class="heading-font text-2xl font-bold text-purple-900">MOD GURU / IBU BAPA</h2>
+                </div>
+                <button onclick="toggleTeacherModal()" class="text-slate-400 hover:text-slate-600 font-bold text-2xl">&times;</button>
+            </div>
+
+            <p class="text-xs text-slate-500 mb-4">Laporan prestasi murid bagi sesi latihan Bahasa Melayu Tahun 1 (50 Soalan).</p>
+
+            <!-- STATS SUMMARY -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
+                <div class="bg-purple-50 border border-purple-200 p-3 rounded-xl text-center">
+                    <span class="text-xs text-purple-600 font-bold block">Soalan Dijawab</span>
+                    <span id="teacherTotal" class="heading-font text-xl font-bold text-purple-900">0 / 50</span>
+                </div>
+                <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl text-center">
+                    <span class="text-xs text-emerald-600 font-bold block">Peratus Ketepatan</span>
+                    <span id="teacherAccuracy" class="heading-font text-xl font-bold text-emerald-900">0%</span>
+                </div>
+                <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl text-center">
+                    <span class="text-xs text-amber-600 font-bold block">Markah Terkumpul</span>
+                    <span id="teacherScore" class="heading-font text-xl font-bold text-amber-900">0</span>
+                </div>
+                <div class="bg-blue-50 border border-blue-200 p-3 rounded-xl text-center">
+                    <span class="text-xs text-blue-600 font-bold block">Bonus Berjaya</span>
+                    <span id="teacherStreak" class="heading-font text-xl font-bold text-blue-900">0</span>
+                </div>
+            </div>
+
+            <!-- TOPIC ANALYSIS TABLE -->
+            <h3 class="heading-font text-base font-bold text-slate-800 mb-2">📋 Ringkasan Topik Permainan:</h3>
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 mb-5 text-xs text-slate-700 leading-relaxed">
+                <p><strong>Topik Tahun 1 Terlibat (50 Soalan):</strong> Huruf Vokal & Konsonan, Suku Kata, Kata Nama, Kata Kerja, Kata Adjektif, Kata Ganti Nama, Kata Tanya, Tanda Baca, Ejaan, Membina & Menyusun Ayat, Kefahaman Pendek.</p>
+            </div>
+
+            <!-- TEACHER ACTIONS -->
+            <div class="flex flex-wrap justify-end gap-2 border-t-2 border-slate-200 pt-4">
+                <button onclick="resetScoreData(); toggleTeacherModal();" class="bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold px-4 py-2 rounded-xl text-sm border border-rose-300">
+                    🗑️ Reset Skor
+                </button>
+                <button onclick="toggleTeacherModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-5 py-2 rounded-xl text-sm">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="max-w-4xl mx-auto w-full text-center text-xs text-slate-500 py-2">
+        <p>Jom Bijak Bahasa! 🎮📚 • Disesuaikan untuk Kurikulum Bahasa Melayu Tahun 1 Sekolah Rendah Malaysia (50 Soalan)</p>
+    </footer>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toastNotification" class="fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white font-bold px-6 py-3 rounded-2xl shadow-2xl z-50 text-xs sm:text-sm transition-all duration-300 opacity-0 pointer-events-none border-2 border-slate-700 flex items-center space-x-2">
+        <span id="toastIcon">✨</span>
+        <span id="toastMessage">Pemberitahuan</span>
+    </div>
+
+    <script>
+        /* ===================================================================
+           SOUND ENGINE (Web Audio API)
+           =================================================================== */
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let soundEnabled = true;
+
+        function playSound(type) {
+            if (!soundEnabled) return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                const now = audioCtx.currentTime;
+
+                if (type === 'correct') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, now); // C5
+                    osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.1); // E5
+                    osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.2); // G5
+                    gain.gain.setValueAtTime(0.3, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+                    osc.start(now);
+                    osc.stop(now + 0.35);
+                } else if (type === 'wrong') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(220, now); // A3
+                    osc.frequency.exponentialRampToValueAtTime(164.81, now + 0.2); // E3
+                    gain.gain.setValueAtTime(0.3, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                } else if (type === 'bonus') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, now);
+                    osc.frequency.setValueAtTime(659.25, now + 0.08);
+                    osc.frequency.setValueAtTime(783.99, now + 0.16);
+                    osc.frequency.setValueAtTime(1046.50, now + 0.24);
+                    gain.gain.setValueAtTime(0.3, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+                    osc.start(now);
+                    osc.stop(now + 0.5);
+                } else if (type === 'tick') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(800, now);
+                    gain.gain.setValueAtTime(0.05, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+                    osc.start(now);
+                    osc.stop(now + 0.05);
+                }
+            } catch (e) {
+                console.log("Audio not supported or blocked.");
+            }
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const btn = document.getElementById("soundToggleBtn");
+            btn.innerText = soundEnabled ? "🔊" : "🔇";
+        }
+
+        /* ===================================================================
+           QUESTION BANK (50 QUESTIONS FOR YEAR 1)
+           =================================================================== */
+        const QUESTION_BANK = [
+            // --- SOALAN 1 - 10 (PDF ORIGINAL SOALAN 1 - 10) ---
+            {
+                id: 1,
+                prompt: "Apakah huruf vokal?",
+                options: ["B", "M", "A", "T"],
+                answer: 2,
+                topic: "Huruf Vokal",
+                tier: "EASY",
+                explain: "Huruf 'A' ialah huruf vokal. Huruf vokal lain ialah E, I, O, U.",
+                visual: { type: "emoji", content: "🔤 🗣️" }
+            },
+            {
+                id: 2,
+                prompt: "Pilih perkataan yang betul.",
+                options: ["baju", "buja", "jabu", "ajub"],
+                answer: 0,
+                topic: "Mengeja Perkataan",
+                tier: "EASY",
+                explain: "Ejaan yang betul ialah 'baju'.",
+                visual: { type: "emoji", content: "👕" }
+            },
+            {
+                id: 3,
+                prompt: "Ali ________ bola di padang.",
+                options: ["makan", "bermain", "tidur", "minum"],
+                answer: 1,
+                topic: "Kata Kerja",
+                tier: "EASY",
+                explain: "'Bermain' ialah perbuatan yang sesuai dilakukan bersama bola.",
+                visual: { type: "emoji", content: "⚽ 🏃" }
+            },
+            {
+                id: 4,
+                prompt: "“________ nama kamu?” Apakah kata tanya yang sesuai?",
+                options: ["Bila", "Apa", "Siapa", "Mana"],
+                answer: 2,
+                topic: "Kata Tanya",
+                tier: "EASY",
+                explain: "Kata tanya 'Siapa' digunakan untuk bertanyakan nama seseorang.",
+                visual: { type: "emoji", content: "❓ 👦" }
+            },
+            {
+                id: 5,
+                prompt: "Suku kata bagi “buku” ialah...",
+                options: ["bu-ku", "buk-u", "b-uku", "bu-k-u"],
+                answer: 0,
+                topic: "Suku Kata",
+                tier: "EASY",
+                explain: "Perkataan 'buku' mempunyai dua suku kata iaitu 'bu' dan 'ku'.",
+                visual: { type: "emoji", content: "📖" }
+            },
+            {
+                id: 6,
+                prompt: "Ibu sedang ________ nasi.",
+                options: ["memasak", "berlari", "membaca", "tidur"],
+                answer: 0,
+                topic: "Kata Kerja",
+                tier: "EASY",
+                explain: "'Memasak' ialah kata kerja bagi aktiviti menyediakan nasi.",
+                visual: { type: "emoji", content: "🍚 👩‍🍳" }
+            },
+            {
+                id: 7,
+                prompt: "Pilih ayat yang betul.",
+                options: ["Ali bola bermain.", "Bola Ali bermain.", "Ali bermain bola.", "Bermain Ali bola."],
+                answer: 2,
+                topic: "Membina Ayat",
+                tier: "EASY",
+                explain: "Susunan ayat yang tepat mengikut tatabahasa ialah 'Ali bermain bola.'",
+                visual: { type: "emoji", content: "👦 ⚽" }
+            },
+            {
+                id: 8,
+                prompt: "Apakah lawan bagi “besar”?",
+                options: ["tinggi", "kecil", "panjang", "lebar"],
+                answer: 1,
+                topic: "Perkataan Berlawanan",
+                tier: "EASY",
+                explain: "Lawan bagi perkataan 'besar' ialah 'kecil'.",
+                visual: { type: "emoji", content: "🐘 ↔️ 🐭" }
+            },
+            {
+                id: 9,
+                prompt: "“Kucing itu comel.” Perkataan “comel” ialah...",
+                options: ["kata nama", "kata kerja", "kata adjektif", "kata tanya"],
+                answer: 2,
+                topic: "Kata Adjektif",
+                tier: "EASY",
+                explain: "'Comel' ialah kata adjektif sifat/keadaan kucing.",
+                visual: { type: "emoji", content: "🐱 ✨" }
+            },
+            {
+                id: 10,
+                prompt: "Apakah tanda baca di akhir ayat tanya?",
+                options: [".", ",", "!", "?"],
+                answer: 3,
+                topic: "Tanda Baca",
+                tier: "EASY",
+                explain: "Tanda soal (?) digunakan di akhir setiap ayat tanya.",
+                visual: { type: "emoji", content: "❓" }
+            },
+
+            // --- SOALAN 11 - 20 (PDF ORIGINAL SOALAN 11 - 20) ---
+            {
+                id: 11,
+                prompt: "Pilih perkataan yang mempunyai dua suku kata.",
+                options: ["meja", "jam", "beg", "kerusi"],
+                answer: 0,
+                topic: "Suku Kata",
+                tier: "MEDIUM",
+                explain: "'me-ja' mempunyai 2 suku kata. 'jam' (1), 'beg' (1), 'ker-u-si' (3).",
+                visual: null
+            },
+            {
+                id: 12,
+                prompt: "________ sedang membaca buku.",
+                options: ["Mereka", "Makan", "Cantik", "Bola"],
+                answer: 0,
+                topic: "Kata Ganti Nama",
+                tier: "MEDIUM",
+                explain: "'Mereka' ialah kata ganti nama diri bagi merujuk seumpulan orang.",
+                visual: { type: "emoji", content: "👥 📚" }
+            },
+            {
+                id: 13,
+                prompt: "Apakah nama haiwan ini?",
+                options: ["ayam", "ikan", "kucing", "arnab"],
+                answer: 1,
+                topic: "Kosa Kata",
+                tier: "MEDIUM",
+                explain: "Gambar menunjukkan berenang dalam air iaitu 'ikan'.",
+                visual: { type: "emoji", content: "🐟 🌊" }
+            },
+            {
+                id: 14,
+                prompt: "“Siti makan nasi.” Siapakah yang makan nasi?",
+                options: ["Ali", "Siti", "Abu", "Ibu"],
+                answer: 1,
+                topic: "Kefahaman Pendek",
+                tier: "MEDIUM",
+                explain: "Berdasarkan ayat pendek, 'Siti' yang sedang makan nasi.",
+                visual: { type: "emoji", content: "👧 🍚" }
+            },
+            {
+                id: 15,
+                prompt: "Pilih kata kerja.",
+                options: ["cantik", "meja", "berlari", "merah"],
+                answer: 2,
+                topic: "Kata Kerja",
+                tier: "MEDIUM",
+                explain: "'Berlari' ialah perbuatan/kata kerja.",
+                visual: { type: "emoji", content: "🏃‍♂️" }
+            },
+            {
+                id: 16,
+                prompt: "“Adik minum susu.” Apakah yang diminum oleh adik?",
+                options: ["Air", "Jus", "Susu", "Teh"],
+                answer: 2,
+                topic: "Kefahaman Pendek",
+                tier: "MEDIUM",
+                explain: "Adik minum 'Susu'.",
+                visual: { type: "emoji", content: "👶 🥛" }
+            },
+            {
+                id: 17,
+                prompt: "Apakah huruf pertama bagi perkataan “rumah”?",
+                options: ["R", "M", "H", "A"],
+                answer: 0,
+                topic: "Huruf Konsonan",
+                tier: "MEDIUM",
+                explain: "Perkataan 'rumah' bermula dengan huruf 'R'.",
+                visual: { type: "emoji", content: "🏠" }
+            },
+            {
+                id: 18,
+                prompt: "Pilih ayat tanya.",
+                options: ["Ali pergi sekolah.", "Adik makan nasi.", "Siapa nama kamu?", "Ibu memasak."],
+                answer: 2,
+                topic: "Ayat Tanya",
+                tier: "MEDIUM",
+                explain: "'Siapa nama kamu?' mengandungi kata tanya 'Siapa' dan diakhiri tanda ?",
+                visual: { type: "emoji", content: "❓" }
+            },
+            {
+                id: 19,
+                prompt: "Apakah lawan bagi “panas”?",
+                options: ["besar", "sejuk", "tinggi", "pendek"],
+                answer: 1,
+                topic: "Perkataan Berlawanan",
+                tier: "MEDIUM",
+                explain: "Lawan bagi 'panas' ialah 'sejuk'.",
+                visual: { type: "emoji", content: "🔥 ↔️ 🧊" }
+            },
+            {
+                id: 20,
+                prompt: "Pilih perkataan yang betul ejaannya.",
+                options: ["sekola", "sekolah", "sekoah", "skolah"],
+                answer: 1,
+                topic: "Mengeja Perkataan",
+                tier: "MEDIUM",
+                explain: "Ejaan tatabahasa yang betul ialah 'sekolah'.",
+                visual: { type: "emoji", content: "🏫" }
+            },
+
+            // --- SOALAN 21 - 30 (PDF ORIGINAL SOALAN 21 - 30) ---
+            {
+                id: 21,
+                prompt: "“Bola itu merah.” Apakah warna bola?",
+                options: ["Biru", "Hijau", "Merah", "Kuning"],
+                answer: 2,
+                topic: "Kata Adjektif Warna",
+                tier: "HARD",
+                explain: "Dalam ayat dinyatakan bahawa warna bola ialah 'Merah'.",
+                visual: { type: "emoji", content: "⚽" }
+            },
+            {
+                id: 22,
+                prompt: "________ kamu tinggal?",
+                options: ["Siapa", "Apa", "Di mana", "Bila"],
+                answer: 2,
+                topic: "Kata Tanya Tempat",
+                tier: "HARD",
+                explain: "'Di mana' digunakan untuk bertanyakan tempat atau lokasi.",
+                visual: { type: "emoji", content: "🗺️ 🏠" }
+            },
+            {
+                id: 23,
+                prompt: "Pilih kata nama.",
+                options: ["berlari", "cantik", "kerusi", "makan"],
+                answer: 2,
+                topic: "Kata Nama Benda",
+                tier: "HARD",
+                explain: "'Kerusi' ialah kata nama bagi perabot/benda.",
+                visual: { type: "emoji", content: "🪑" }
+            },
+            {
+                id: 24,
+                prompt: "Suku kata bagi “mata” ialah...",
+                options: ["ma-ta", "mat-a", "m-ata", "mata-a"],
+                answer: 0,
+                topic: "Suku Kata",
+                tier: "HARD",
+                explain: "'mata' dibahagikan kepada suku kata 'ma' dan 'ta'.",
+                visual: { type: "emoji", content: "👁️" }
+            },
+            {
+                id: 25,
+                prompt: "Ayah sedang ________ surat khabar.",
+                options: ["membaca", "memasak", "berlari", "tidur"],
+                answer: 0,
+                topic: "Kata Kerja",
+                tier: "HARD",
+                explain: "Aktiviti menggunakan surat khabar ialah 'membaca'.",
+                visual: { type: "emoji", content: "📰 👨" }
+            },
+            {
+                id: 26,
+                prompt: "Pilih ayat yang betul.",
+                options: ["Ini buku saya.", "Ini saya buku.", "Buku ini saya.", "Saya ini buku."],
+                answer: 0,
+                topic: "Membina Ayat",
+                tier: "HARD",
+                explain: "Susunan ayat yang gramatis ialah 'Ini buku saya.'",
+                visual: { type: "emoji", content: "📘" }
+            },
+            {
+                id: 27,
+                prompt: "Apakah lawan bagi “tinggi”?",
+                options: ["pendek", "besar", "jauh", "panjang"],
+                answer: 0,
+                topic: "Perkataan Berlawanan",
+                tier: "HARD",
+                explain: "Lawan bagi 'tinggi' ialah 'pendek'.",
+                visual: { type: "emoji", content: "🦒 ↔️ 🐕" }
+            },
+            {
+                id: 28,
+                prompt: "“Aiman dan Ali bermain bola.” Siapakah yang bermain bola?",
+                options: ["Aiman sahaja", "Ali sahaja", "Aiman dan Ali", "Ibu"],
+                answer: 2,
+                topic: "Kefahaman Pendek",
+                tier: "HARD",
+                explain: "Kedua-dua mereka iaitu Aiman dan Ali sedang bermain bola.",
+                visual: { type: "emoji", content: "👦👦 ⚽" }
+            },
+            {
+                id: 29,
+                prompt: "Pilih tanda baca yang betul: “Wah, cantiknya bunga ________”",
+                options: [".", "?", "!", ","],
+                answer: 2,
+                topic: "Tanda Baca",
+                tier: "HARD",
+                explain: "Ayat seruan bermula dengan kata seru 'Wah' menggunakan tanda seru (!).",
+                visual: { type: "emoji", content: "🌸 ❗" }
+            },
+            {
+                id: 30,
+                prompt: "Lengkapkan ayat: “Kakak ________ gigi.”",
+                options: ["tidur", "gosok", "makan", "minum"],
+                answer: 1,
+                topic: "Kata Kerja Aktiviti",
+                tier: "HARD",
+                explain: "Aktiviti bagi menjaga kebersihan gigi ialah 'gosok'.",
+                visual: { type: "emoji", content: "🪥 🦹" }
+            },
+
+            // --- SOALAN TAMBAHAN 31 - 50 (MENJADIKAN 50 SOALAN KESELURUHAN) ---
+            {
+                id: 31,
+                prompt: "Manakah antara berikut merupakan huruf konsonan?",
+                options: ["a", "e", "k", "u"],
+                answer: 2,
+                topic: "Huruf Konsonan",
+                tier: "EASY",
+                explain: "Huruf 'k' ialah huruf konsonan, manakala a, e, dan u ialah huruf vokal.",
+                visual: { type: "emoji", content: "🔤" }
+            },
+            {
+                id: 32,
+                prompt: "Lengkapkan ejaan perkataan ini: “K _ r e t a”",
+                options: ["a", "e", "i", "u"],
+                answer: 1,
+                topic: "Mengeja Perkataan",
+                tier: "EASY",
+                explain: "Ejaan penuh yang betul ialah 'Kereta' menggunakan huruf 'e'.",
+                visual: { type: "emoji", content: "🚗" }
+            },
+            {
+                id: 33,
+                prompt: "Perkataan “pembaris” mempunyai berapa suku kata?",
+                options: ["2", "3", "4", "5"],
+                answer: 1,
+                topic: "Suku Kata",
+                tier: "EASY",
+                explain: "'pem-ba-ris' mengandungi 3 suku kata.",
+                visual: { type: "emoji", content: "📏" }
+            },
+            {
+                id: 34,
+                prompt: "Burung ________ tinggi di udara.",
+                options: ["berenang", "terbang", "berjalan", "merayap"],
+                answer: 1,
+                topic: "Kata Kerja Pergerakan",
+                tier: "EASY",
+                explain: "Pergerakan burung di udara dinamakan 'terbang'.",
+                visual: { type: "emoji", content: "🕊️ ☁️" }
+            },
+            {
+                id: 35,
+                prompt: "Apakah perkataan berlawanan bagi “terang”?",
+                options: ["Gelap", "Kelam", "Hitam", "Malam"],
+                answer: 0,
+                topic: "Perkataan Berlawanan",
+                tier: "EASY",
+                explain: "Lawan bagi 'terang' ialah 'gelap'.",
+                visual: { type: "emoji", content: "💡 ↔️ 🌑" }
+            },
+            {
+                id: 36,
+                prompt: "“________ seorang murid yang rajin,” kata Mei Ling.",
+                options: ["Saya", "Beliau", "Mereka", "Dia"],
+                answer: 0,
+                topic: "Kata Ganti Nama",
+                tier: "MEDIUM",
+                explain: "Mei Ling merujuk dirinya sendiri menggunakan kata ganti nama 'Saya'.",
+                visual: { type: "emoji", content: "👧 ✏️" }
+            },
+            {
+                id: 37,
+                prompt: "“Ahmad menyiram bunga.” Perkataan “menyiram” ialah...",
+                options: ["Kata nama", "Kata kerja", "Kata adjektif", "Kata tanya"],
+                answer: 1,
+                topic: "Kata Kerja",
+                tier: "MEDIUM",
+                explain: "'Menyiram' menunjukkan suatu perbuatan / perlakuan.",
+                visual: { type: "emoji", content: "🪴 💧" }
+            },
+            {
+                id: 38,
+                prompt: "Manakah antara berikut merupakan Kata Nama bagi benda?",
+                options: ["Melompat", "Kasut", "Merah", "Ketawa"],
+                answer: 1,
+                topic: "Kata Nama",
+                tier: "MEDIUM",
+                explain: "'Kasut' ialah objek / benda (kata nama).",
+                visual: { type: "emoji", content: "👟" }
+            },
+            {
+                id: 39,
+                prompt: "Lengkapkan ayat: “Aina menangis kerana kakinya ________.”",
+                options: ["wangi", "sakit", "manis", "sedap"],
+                answer: 1,
+                topic: "Melengkapkan Ayat",
+                tier: "MEDIUM",
+                explain: "Perasaan menangis berkait rapat dengan rasa 'sakit'.",
+                visual: { type: "emoji", content: "😭 🩹" }
+            },
+            {
+                id: 40,
+                prompt: "Pilih ejaan yang betul bagi nama haiwan dalam gambar.",
+                options: ["Gajah", "Gaja", "Gejah", "Gajahh"],
+                answer: 0,
+                topic: "Ejaan Perkataan",
+                tier: "MEDIUM",
+                explain: "Ejaan yang tepat bagi haiwan ini ialah 'Gajah'.",
+                visual: { type: "emoji", content: "🐘" }
+            },
+            {
+                id: 41,
+                prompt: "“Mengapakah kamu lewat datang ke sekolah?” Apakah kata tanya dalam ayat ini?",
+                options: ["Kamu", "Mengapakah", "Sekolah", "Datang"],
+                answer: 1,
+                topic: "Kata Tanya",
+                tier: "HARD",
+                explain: "'Mengapakah' ialah kata tanya yang bertanyakan sebab.",
+                visual: { type: "emoji", content: "❓ 🏫" }
+            },
+            {
+                id: 42,
+                prompt: "Pilih susunan perkataan yang membentuk ayat betul.",
+                options: [
+                    "Kucing makan ikan itu.",
+                    "Makan kucing ikan itu.",
+                    "Ikan makan kucing itu.",
+                    "Itu makan kucing ikan."
+                ],
+                answer: 0,
+                topic: "Susunan Ayat",
+                tier: "HARD",
+                explain: "Subjek (Kucing) + Kata kerja (makan) + Objek (ikan itu).",
+                visual: { type: "emoji", content: "🐱 🐟" }
+            },
+            {
+                id: 43,
+                prompt: "Apakah tanda baca yang tepat di akhir ayat ini: “Ibu membeli buah tembikai di pasar ________”",
+                options: ["?", "!", ".", ","],
+                answer: 2,
+                topic: "Tanda Baca",
+                tier: "HARD",
+                explain: "Ini merupakan ayat penyata biasa, jadi diakhiri dengan tanda noktah (.).",
+                visual: { type: "emoji", content: "🍉 🛒" }
+            },
+            {
+                id: 44,
+                prompt: "“Zara ada sebuah basikal baharu. Basikal Zara berwarna biru.” Apakah warna basikal Zara?",
+                options: ["Merah", "Biru", "Kuning", "Hijau"],
+                answer: 1,
+                topic: "Kefahaman Pendek",
+                tier: "HARD",
+                explain: "Petikan teks menyebut basikal Zara berwarna 'biru'.",
+                visual: { type: "emoji", content: "🚲" }
+            },
+            {
+                id: 45,
+                prompt: "Pilih perkataan yang betul ejaannya.",
+                options: ["Pensil", "Pensel", "Pemsel", "Pense"],
+                answer: 1,
+                topic: "Ejaan Perkataan",
+                tier: "HARD",
+                explain: "Ejaan mengikut Kamus Dewan yang betul bagi alat tulis ini ialah 'Pensel'.",
+                visual: { type: "emoji", content: "✏️" }
+            },
+            {
+                id: 46,
+                prompt: "Lengkapkan ayat: “Pak Cik Hassan ________ pokok kelapa yang tinggi itu.”",
+                options: ["memanjat", "berenang", "membaca", "menyapu"],
+                answer: 0,
+                topic: "Kata Kerja Kesesuaian",
+                tier: "HARD",
+                explain: "Aktiviti menaiki pokok tinggi ialah 'memanjat'.",
+                visual: { type: "emoji", content: "🌴 👨" }
+            },
+            {
+                id: 47,
+                prompt: "“Baju sekolah Ali sangat ________.” Perkataan yang sesuai ialah...",
+                options: ["tajam", "bersih", "laju", "riuh"],
+                answer: 1,
+                topic: "Kata Adjektif",
+                tier: "HARD",
+                explain: "'Bersih' ialah kata adjektif sifat keadaan bagi baju.",
+                visual: { type: "emoji", content: "👔 ✨" }
+            },
+            {
+                id: 48,
+                prompt: "“________ yang memasak makanan yang sedap ini?”",
+                options: ["Siapa", "Bila", "Berapa", "Kenapa"],
+                answer: 0,
+                topic: "Kata Tanya Orang",
+                tier: "HARD",
+                explain: "Kata tanya 'Siapa' digunakan untuk bertanyakan manusia/orang.",
+                visual: { type: "emoji", content: "🍲 ❓" }
+            },
+            {
+                id: 49,
+                prompt: "Pilih pasangan perkataan berlawanan yang betul.",
+                options: ["Bersih - Baju", "Wangi - Busuk", "Panas - Tinggi", "Panjang - Banyak"],
+                answer: 1,
+                topic: "Perkataan Berlawanan",
+                tier: "HARD",
+                explain: "Perkataan 'Wangi' berlawanan maksudnya dengan 'Busuk'.",
+                visual: { type: "emoji", content: "🌸 ↔️ 🗑️" }
+            },
+            {
+                id: 50,
+                prompt: "“Adik gembira kerana mendapat hadiah.” Apakah maksud perkataan “gembira”?",
+                options: ["Sedih", "Marah", "Seronok", "Takut"],
+                answer: 2,
+                topic: "Kosa Kata & Maksud",
+                tier: "HARD",
+                explain: "Maksud bagi perkataan 'gembira' ialah rasa 'seronok' atau bahagia.",
+                visual: { type: "emoji", content: "🎁 😄" }
+            }
+        ];
+
+        /* ===================================================================
+           BIMO SPEECH DICTIONARY
+           =================================================================== */
+        const BIMO_SPEECH = {
+            start: [
+                "Fikir secara perlahan-lahan ya! Bimo yakin kamu boleh buat!",
+                "Baca soalan dengan teliti. Bimo sentiasa menyokong kamu!",
+                "Ayuh kita tunjukkan kehebatan Bahasa Melayu kamu!",
+                "Satu demi satu, pasti kamu boleh jawab kesemuanya!"
+            ],
+            correct: [
+                "HEBAT! Jawapan kamu sangat tepat!",
+                "BIJAKNYA! Teruskan semangat ini!",
+                "SYABAS! Kamu memang bintang Bahasa Melayu!",
+                "TEPAT SEKALI! Bimo gembira melihat jawapan kamu!"
+            ],
+            wrong: [
+                "Tidak mengapa, cuba lagi di soalan seterusnya!",
+                "Jangan risau, kesilapan membuatkan kita lebih pandai!",
+                "Teruskan usaha! Bimo percaya kamu boleh buat lebih baik!"
+            ],
+            timeout: [
+                "Masa telah tamat! Mari kita lihat pencerahan soalan ini.",
+                "Alamak, masa habis! Tidak apa, jom ke soalan seterusnya."
+            ]
+        };
+
+        /* ===================================================================
+           GAME STATE & VARIABLES
+           =================================================================== */
+        let currentQuestions = [];
+        let currentIndex = 0;
+        let score = 0;
+        let lives = 3;
+        let streak = 0;
+        let correctCount = 0;
+        let wrongCount = 0;
+        let timer = null;
+        let timeLeft = 40;
+        let isAnswered = false;
+
+        // Teacher tracking data
+        let teacherStats = {
+            totalAttempted: 0,
+            correct: 0,
+            wrong: 0,
+            score: 0,
+            bonusCount: 0
+        };
+
+        /* ===================================================================
+           NAVIGATION & GAME SETUP
+           =================================================================== */
+        function goHome() {
+            clearInterval(timer);
+            document.getElementById("welcomeScreen").classList.remove("hidden");
+            document.getElementById("gameScreen").classList.add("hidden");
+            document.getElementById("gameOverScreen").classList.add("hidden");
+            document.getElementById("resultsScreen").classList.add("hidden");
+        }
+
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function startGame() {
+            // Reset state
+            score = 0;
+            lives = 3;
+            streak = 0;
+            correctCount = 0;
+            wrongCount = 0;
+            currentIndex = 0;
+
+            // Load all 50 questions
+            currentQuestions = [...QUESTION_BANK];
+
+            // Update UI Views
+            document.getElementById("welcomeScreen").classList.add("hidden");
+            document.getElementById("gameOverScreen").classList.add("hidden");
+            document.getElementById("resultsScreen").classList.add("hidden");
+            document.getElementById("gameScreen").classList.remove("hidden");
+            document.getElementById("gameScreen").classList.add("flex");
+
+            updateHeaderStats();
+            loadQuestion();
+        }
+
+        function updateHeaderStats() {
+            document.getElementById("scoreText").innerText = score;
+            
+            // Lives hearts display
+            let heartsHTML = "";
+            for (let i = 0; i < 3; i++) {
+                if (i < lives) {
+                    heartsHTML += "❤️";
+                } else {
+                    heartsHTML += "🖤";
+                }
+            }
+            document.getElementById("livesContainer").innerHTML = heartsHTML;
+
+            // Level Badge based on Question number out of 50
+            const lvlBadge = document.getElementById("levelBadge");
+            const lvlText = document.getElementById("levelText");
+
+            if (currentIndex < 15) {
+                lvlText.innerText = "TAHAP 1: ASAS";
+                lvlBadge.className = "bg-emerald-100 text-emerald-800 border-2 border-emerald-300 font-black px-3 py-1 rounded-xl text-xs sm:text-sm flex items-center space-x-1";
+            } else if (currentIndex < 35) {
+                lvlText.innerText = "TAHAP 2: SEDERHANA";
+                lvlBadge.className = "bg-amber-100 text-amber-800 border-2 border-amber-300 font-black px-3 py-1 rounded-xl text-xs sm:text-sm flex items-center space-x-1";
+            } else {
+                lvlText.innerText = "TAHAP 3: CABARAN";
+                lvlBadge.className = "bg-rose-100 text-rose-800 border-2 border-rose-300 font-black px-3 py-1 rounded-xl text-xs sm:text-sm flex items-center space-x-1";
+            }
+
+            // Progress bar
+            const totalQ = currentQuestions.length;
+            const pct = ((currentIndex) / totalQ) * 100;
+            document.getElementById("progressBar").style.width = pct + "%";
+        }
+
+        /* ===================================================================
+           QUESTION DISPLAY ENGINE
+           =================================================================== */
+        function loadQuestion() {
+            isAnswered = false;
+            document.getElementById("nextBtnContainer").classList.add("hidden");
+
+            const q = currentQuestions[currentIndex];
+
+            // Set question meta
+            document.getElementById("questionNumText").innerText = `Soalan ${currentIndex + 1} / ${currentQuestions.length}`;
+            document.getElementById("topicTag").innerText = q.topic;
+            document.getElementById("questionPrompt").innerText = q.prompt;
+
+            // Visual container handling
+            const visualBox = document.getElementById("visualContainer");
+            if (q.visual) {
+                visualBox.classList.remove("hidden");
+                if (q.visual.type === "emoji") {
+                    visualBox.innerHTML = `
+                        <span class="text-5xl sm:text-6xl animate-wiggle tracking-widest">${q.visual.content}</span>
+                    `;
+                }
+            } else {
+                visualBox.classList.add("hidden");
+                visualBox.innerHTML = "";
+            }
+
+            // Prepare options (shuffle choices dynamically while maintaining correct index)
+            const rawOptions = q.options.map((opt, idx) => ({ text: opt, isCorrect: idx === q.answer }));
+            const shuffledOptions = shuffleArray(rawOptions);
+
+            const grid = document.getElementById("optionsGrid");
+            grid.innerHTML = "";
+
+            const labels = ["A", "B", "C", "D"];
+            shuffledOptions.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.className = "option-btn btn-game bg-white hover:bg-blue-50 text-slate-800 font-extrabold p-4 rounded-2xl border-3 border-slate-200 shadow flex items-center space-x-3 text-left text-base sm:text-lg transition duration-150 w-full";
+                btn.innerHTML = `
+                    <span class="w-9 h-9 bg-blue-100 text-blue-700 font-black rounded-xl flex items-center justify-center border border-blue-200 text-base flex-shrink-0">${labels[idx]}</span>
+                    <span class="flex-grow">${opt.text}</span>
+                `;
+                btn.onclick = () => handleAnswer(opt.isCorrect, btn, q.explain, shuffledOptions);
+                grid.appendChild(btn);
+            });
+
+            // Random BIMO Speech encouragement at question start
+            const randomSpeech = BIMO_SPEECH.start[Math.floor(Math.random() * BIMO_SPEECH.start.length)];
+            setBimoSpeech(randomSpeech, "neutral");
+
+            // Start Timer
+            startTimer();
+            updateHeaderStats();
+        }
+
+        /* ===================================================================
+           TIMER SYSTEM (40 SECONDS)
+           =================================================================== */
+        function startTimer() {
+            clearInterval(timer);
+            timeLeft = 40;
+            document.getElementById("timerText").innerText = timeLeft;
+
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById("timerText").innerText = timeLeft;
+                
+                if (timeLeft <= 5 && timeLeft > 0) {
+                    playSound('tick');
+                }
+
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    handleTimeout();
+                }
+            }, 1000);
+        }
+
+        function handleTimeout() {
+            if (isAnswered) return;
+            isAnswered = true;
+
+            playSound('wrong');
+            wrongCount++;
+            lives--;
+            streak = 0;
+            teacherStats.totalAttempted++;
+            teacherStats.wrong++;
+
+            updateHeaderStats();
+            highlightCorrectOption();
+
+            const randomTimeoutSpeech = BIMO_SPEECH.timeout[Math.floor(Math.random() * BIMO_SPEECH.timeout.length)];
+            setBimoSpeech(`⏱️ ${randomTimeoutSpeech} Pencerahan: ${currentQuestions[currentIndex].explain}`, "wrong");
+
+            checkGameContinuity();
+        }
+
+        /* ===================================================================
+           ANSWER EVALUATION LOGIC
+           =================================================================== */
+        function handleAnswer(isCorrect, selectedBtn, explanation, shuffledOptions) {
+            if (isAnswered) return;
+            isAnswered = true;
+            clearInterval(timer);
+
+            teacherStats.totalAttempted++;
+
+            if (isCorrect) {
+                // Correct Answer
+                playSound('correct');
+                selectedBtn.classList.remove("bg-white", "hover:bg-blue-50", "border-slate-200");
+                selectedBtn.classList.add("bg-emerald-100", "border-emerald-500", "text-emerald-900", "ring-4", "ring-emerald-200");
+
+                score += 10;
+                correctCount++;
+                streak++;
+                teacherStats.correct++;
+
+                // Bonus Check (5 consecutive correct)
+                let bonusMsg = "";
+                if (streak === 5) {
+                    score += 20;
+                    teacherStats.bonusCount++;
+                    bonusMsg = " 🌟 BONUS STREAK +20 MATA!";
+                    playSound('bonus');
+                    confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 } });
+                    streak = 0; // Reset streak counter after bonus
+                }
+
+                const speech = BIMO_SPEECH.correct[Math.floor(Math.random() * BIMO_SPEECH.correct.length)];
+                setBimoSpeech(`${speech}${bonusMsg}`, "correct");
+
+                // Confetti burst for correct answer
+                confetti({ particleCount: 35, spread: 50, origin: { y: 0.8 } });
+
+            } else {
+                // Wrong Answer
+                playSound('wrong');
+                selectedBtn.classList.remove("bg-white", "hover:bg-blue-50", "border-slate-200");
+                selectedBtn.classList.add("bg-rose-100", "border-rose-500", "text-rose-900");
+
+                wrongCount++;
+                lives--;
+                streak = 0;
+                teacherStats.wrong++;
+
+                highlightCorrectOption();
+
+                const speech = BIMO_SPEECH.wrong[Math.floor(Math.random() * BIMO_SPEECH.wrong.length)];
+                setBimoSpeech(`❌ ${speech} Pencerahan: ${explanation}`, "wrong");
+            }
+
+            teacherStats.score = score;
+            updateHeaderStats();
+            checkGameContinuity();
+        }
+
+        function highlightCorrectOption() {
+            const grid = document.getElementById("optionsGrid");
+            const q = currentQuestions[currentIndex];
+            const optionBtns = grid.children;
+
+            for (let btn of optionBtns) {
+                if (btn.innerText.includes(q.options[q.answer]) || btn.innerText.toLowerCase().includes(q.options[q.answer].toLowerCase())) {
+                    btn.classList.add("bg-emerald-100", "border-emerald-500", "text-emerald-900");
+                }
+            }
+        }
+
+        function setBimoSpeech(msg, status) {
+            const speechBox = document.getElementById("bimoSpeech");
+            speechBox.innerText = `"${msg}"`;
+
+            if (status === "correct") {
+                speechBox.className = "font-extrabold text-emerald-800 text-sm sm:text-base leading-tight";
+            } else if (status === "wrong") {
+                speechBox.className = "font-extrabold text-rose-800 text-sm sm:text-base leading-tight";
+            } else {
+                speechBox.className = "font-bold text-slate-700 text-sm sm:text-base leading-tight";
+            }
+        }
+
+        function checkGameContinuity() {
+            if (lives <= 0) {
+                setTimeout(() => {
+                    document.getElementById("gameScreen").classList.add("hidden");
+                    document.getElementById("gameOverScore").innerText = score;
+                    document.getElementById("gameOverScreen").classList.remove("hidden");
+                }, 1800);
+            } else {
+                document.getElementById("nextBtnContainer").classList.remove("hidden");
+                document.getElementById("nextBtnContainer").classList.add("flex");
+            }
+        }
+
+        function nextQuestion() {
+            currentIndex++;
+            if (currentIndex >= currentQuestions.length) {
+                finishGame();
+            } else {
+                loadQuestion();
+            }
+        }
+
+        /* ===================================================================
+           LEADERBOARD SYSTEM (LOCALSTORAGE)
+           =================================================================== */
+        function getLeaderboardData() {
+            try {
+                return JSON.parse(localStorage.getItem('jom_bijak_leaderboard_50q')) || [];
+            } catch(e) {
+                return [];
+            }
+        }
+
+        function saveCurrentScore() {
+            const input = document.getElementById("playerNameInput");
+            const name = input.value.trim() || "Murid Bijak";
+
+            const newEntry = {
+                name: name,
+                score: score,
+                correct: correctCount,
+                date: new Date().toLocaleDateString('ms-MY')
+            };
+
+            let leaderboard = getLeaderboardData();
+            leaderboard.push(newEntry);
+            
+            // Sort by score descending
+            leaderboard.sort((a, b) => b.score - a.score);
+            leaderboard = leaderboard.slice(0, 10); // Keep top 10
+
+            localStorage.setItem('jom_bijak_leaderboard_50q', JSON.stringify(leaderboard));
+
+            const saveBtn = document.getElementById("saveScoreBtn");
+            saveBtn.innerText = "✅ Tersimpan!";
+            saveBtn.disabled = true;
+            saveBtn.classList.replace("bg-amber-500", "bg-emerald-500");
+
+            renderLeaderboard();
+        }
+
+        function renderLeaderboard() {
+            const list = document.getElementById("leaderboardList");
+            const leaderboard = getLeaderboardData();
+
+            if (leaderboard.length === 0) {
+                list.innerHTML = `<p class="text-center text-xs text-slate-500 py-6">Belum ada rekod. Jadi yang pertama!</p>`;
+                return;
+            }
+
+            const icons = ["🥇", "🥈", "🥉"];
+            list.innerHTML = leaderboard.map((item, idx) => {
+                const rankIcon = icons[idx] || `#${idx + 1}`;
+                return `
+                    <div class="flex items-center justify-between bg-amber-50/80 border border-amber-200 p-2.5 rounded-xl text-xs sm:text-sm">
+                        <div class="flex items-center space-x-2">
+                            <span class="font-black text-amber-800 w-6 text-center">${rankIcon}</span>
+                            <span class="font-bold text-slate-800">${item.name}</span>
+                        </div>
+                        <div class="text-right">
+                            <span class="font-black text-emerald-700 text-sm block">${item.score} Mata (${item.correct}/50)</span>
+                            <span class="text-[10px] text-slate-400 font-semibold">${item.date}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function showToast(msg, icon = "✅") {
+            const toast = document.getElementById("toastNotification");
+            const toastMsg = document.getElementById("toastMessage");
+            const toastIcon = document.getElementById("toastIcon");
+
+            toastMsg.innerText = msg;
+            toastIcon.innerText = icon;
+            toast.classList.remove("opacity-0", "pointer-events-none");
+            toast.classList.add("opacity-100");
+
+            setTimeout(() => {
+                toast.classList.remove("opacity-100");
+                toast.classList.add("opacity-0", "pointer-events-none");
+            }, 3000);
+        }
+
+        function shareGameLink() {
+            const shareUrl = window.location.href;
+            const shareText = "🎮 Jom Bijak Bahasa! Mari uji minda dengan 50 soalan Bahasa Melayu Tahun 1.";
+
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Jom Bijak Bahasa BM Tahun 1',
+                    text: shareText,
+                    url: shareUrl
+                }).catch(() => {});
+            } else {
+                const tempInput = document.createElement("textarea");
+                tempInput.value = `${shareText}\n${shareUrl}`;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                try {
+                    document.execCommand("copy");
+                    showToast("Pautan permainan telah disalin! Boleh tampal di WhatsApp/Telegram.", "🔗");
+                } catch (err) {
+                    showToast("Sila salin pautan dari bar alamat penyemak imbas.", "⚠️");
+                }
+                document.body.removeChild(tempInput);
+            }
+        }
+
+        function toggleLeaderboardModal() {
+            const modal = document.getElementById("leaderboardModal");
+            const isHidden = modal.classList.contains("hidden");
+
+            if (isHidden) {
+                renderLeaderboard();
+                modal.classList.remove("hidden");
+                modal.classList.add("flex");
+            } else {
+                modal.classList.add("hidden");
+                modal.classList.remove("flex");
+            }
+        }
+
+        function clearLeaderboard() {
+            localStorage.removeItem('jom_bijak_leaderboard_50q');
+            renderLeaderboard();
+            showToast("Rekod papan pendahulu telah dipadam.", "🗑️");
+        }
+
+        /* ===================================================================
+           RESULTS & BADGE GENERATION
+           =================================================================== */
+        function finishGame() {
+            clearInterval(timer);
+            document.getElementById("gameScreen").classList.add("hidden");
+            document.getElementById("resultsScreen").classList.remove("hidden");
+
+            // Reset save score button
+            const saveBtn = document.getElementById("saveScoreBtn");
+            saveBtn.innerText = "💾 Simpan Rekod Skor";
+            saveBtn.disabled = false;
+            saveBtn.className = "bg-amber-500 hover:bg-amber-600 text-white font-bold px-5 py-2 rounded-xl text-sm border-2 border-amber-300 shadow w-full sm:w-auto";
+
+            // Populate statistics
+            document.getElementById("resScore").innerText = score;
+            document.getElementById("resCorrect").innerText = `${correctCount} / 50`;
+            document.getElementById("resWrong").innerText = wrongCount;
+            document.getElementById("resLives").innerText = lives;
+
+            // Calculate Tier Rank based on 50 questions (Max ~500+ points)
+            const tierBox = document.getElementById("tierBadgeBox");
+            if (score >= 450) {
+                tierBox.innerText = "🏆 SUPER BIJAK BAHASA!";
+                tierBox.className = "inline-block bg-gradient-to-r from-amber-400 to-yellow-500 text-amber-950 heading-font text-2xl sm:text-3xl font-black px-8 py-3 rounded-2xl shadow-lg border-2 border-yellow-200 animate-bounce";
+            } else if (score >= 380) {
+                tierBox.innerText = "🌟 CEMERLANG!";
+                tierBox.className = "inline-block bg-gradient-to-r from-blue-400 to-indigo-500 text-white heading-font text-2xl sm:text-3xl font-black px-8 py-3 rounded-2xl shadow-lg border-2 border-blue-200";
+            } else if (score >= 300) {
+                tierBox.innerText = "⭐ HEBAT!";
+                tierBox.className = "inline-block bg-gradient-to-r from-emerald-400 to-teal-500 text-white heading-font text-2xl sm:text-3xl font-black px-8 py-3 rounded-2xl shadow-lg border-2 border-emerald-200";
+            } else if (score >= 200) {
+                tierBox.innerText = "👏 BAGUS!";
+                tierBox.className = "inline-block bg-gradient-to-r from-purple-400 to-pink-500 text-white heading-font text-2xl sm:text-3xl font-black px-8 py-3 rounded-2xl shadow-lg border-2 border-purple-200";
+            } else {
+                tierBox.innerText = "💪 TERUSKAN BERLATIH!";
+                tierBox.className = "inline-block bg-slate-200 text-slate-800 heading-font text-2xl sm:text-3xl font-black px-8 py-3 rounded-2xl shadow-lg border-2 border-slate-300";
+            }
+
+            // Award Badges
+            const badgesBox = document.getElementById("badgesContainer");
+            badgesBox.innerHTML = "";
+
+            const badgeDefs = [
+                { id: 'champion', title: '🏆 Juara Bahasa', cond: score >= 400 },
+                { id: 'expert', title: '⭐ Pakar 50 Soalan', cond: correctCount >= 35 },
+                { id: 'speller', title: '✏️ Hebat Mengeja', cond: true },
+                { id: 'accurate', title: '🎯 Tepat Menjawab', cond: wrongCount <= 5 },
+                { id: 'persistent', title: '🌈 Tidak Mudah Berputus Asa', cond: true }
+            ];
+
+            badgeDefs.forEach(b => {
+                if (b.cond) {
+                    const badgeElem = document.createElement("span");
+                    badgeElem.className = "bg-white border-2 border-amber-300 text-amber-900 font-black px-3 py-1.5 rounded-xl text-xs shadow-sm flex items-center space-x-1";
+                    badgeElem.innerText = b.title;
+                    badgesBox.appendChild(badgeElem);
+                }
+            });
+
+            // Trigger celebratory confetti
+            confetti({
+                particleCount: 120,
+                spread: 100,
+                origin: { y: 0.6 }
+            });
+        }
+
+        /* ===================================================================
+           TEACHER MODE MODAL MANAGEMENT
+           =================================================================== */
+        function toggleTeacherModal() {
+            const modal = document.getElementById("teacherModal");
+            const isHidden = modal.classList.contains("hidden");
+
+            if (isHidden) {
+                const total = teacherStats.totalAttempted;
+                const acc = total > 0 ? Math.round((teacherStats.correct / total) * 100) : 0;
+
+                document.getElementById("teacherTotal").innerText = `${total} / 50`;
+                document.getElementById("teacherAccuracy").innerText = `${acc}%`;
+                document.getElementById("teacherScore").innerText = teacherStats.score;
+                document.getElementById("teacherStreak").innerText = teacherStats.bonusCount;
+
+                modal.classList.remove("hidden");
+                modal.classList.add("flex");
+            } else {
+                modal.classList.add("hidden");
+                modal.classList.remove("flex");
+            }
+        }
+
+        function resetScoreData() {
+            teacherStats = {
+                totalAttempted: 0,
+                correct: 0,
+                wrong: 0,
+                score: 0,
+                bonusCount: 0
+            };
+            score = 0;
+            updateHeaderStats();
+        }
+
+        // Initialize audio context unlock
+        window.addEventListener('click', () => {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }, { once: true });
+    </script>
+</body>
+</html>
